@@ -10,7 +10,7 @@ public class Fibonacci {
     }
 
     public static double recursive_n(double x_start, double x_stop, int n){
-        n+=3;
+
         double length = x_stop - x_start;
         double[] fib_sequence = generate_fib_sequence(n);
 
@@ -127,5 +127,18 @@ public class Fibonacci {
         return Arrays.copyOf(array, array.length - 1);
     }
 
+    public static void first_100_fibonacci(){
+        double[] fibs = generate_fib_sequence(100);
 
+        System.out.print("F(n-2)/F(n): ");
+        for (int i = 2; i <100; i++) {
+            System.out.printf("%10f", fibs[i - 2] / fibs[i]);
+        }
+        System.out.print("\nF(n-1)/F(n): ");
+        for (int i = 2; i <100; i++) {
+            System.out.printf("%10f", fibs[i - 1] / fibs[i]);
+        }
+
+
+    }
 }
