@@ -1,12 +1,16 @@
 import java.util.Arrays;
 
 public class Fibonacci {
+    public static int count_func = 0;
 
     private static double f(double x){
+        count_func++;
+        System.out.println("function has been calculated " + count_func +" times");
         return x*x;
     }
 
-    public static double recursive(double x_start, double x_stop, int n){
+    public static double recursive_n(double x_start, double x_stop, int n){
+        n+=3;
         double length = x_stop - x_start;
         double[] fib_sequence = generate_fib_sequence(n);
 
@@ -27,6 +31,32 @@ public class Fibonacci {
                 new double[] {x_right, f_right},
                 cut_last(fib_sequence)
                 );
+    }
+
+    public static double recursive_eps(double x_start, double x_stop, double eps) {
+        double length = x_stop - x_start;
+        int n = (int) Math.ceil(length / (eps * 2.0));
+        System.out.println(n);
+
+        double[] fib_sequence = generate_fib_sequence(n);
+
+        double[] fib = last_three_of_array(fib_sequence);
+
+        double factor_left = fib[2] / fib[0];
+        double factor_right = fib[1] / fib[0];
+
+        double x_left = x_start + factor_left * length;
+        double x_right = x_start + factor_right * length;
+
+        double f_left = f(x_left), f_right = f(x_right);
+
+        return minimize_recursive(
+                x_start,
+                x_stop,
+                new double[] {x_left, f_left},
+                new double[] {x_right, f_right},
+                cut_last(fib_sequence)
+        );
     }
 
     private static double minimize_recursive(double x_start, double x_stop, double[] left, double[] right, double[] fibs) {
